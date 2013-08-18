@@ -3,17 +3,19 @@ class Phrase
     @text = text.to_s
   end
 
-  def normalise
-    @text.downcase
+  def word_count
+    split_words.each_with_object(Hash.new(0)) do |word, counts|
+      counts[normalize(word)] += 1
+    end
+  end
+
+  private
+
+  def normalize(text)
+    text.downcase
   end
 
   def split_words
-    normalise.scan(/\w+/)
-  end
-
-  def word_count
-    split_words.each_with_object(Hash.new(0)) do |word, counts|
-      counts[word] += 1
-    end
+    @text.scan(/\w+/)
   end
 end
